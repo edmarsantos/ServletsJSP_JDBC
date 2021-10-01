@@ -20,7 +20,7 @@ form{
 position:absolute;
 top:40%;
 left:33%;
-right:33;
+right:33%;
 
 }
 
@@ -34,9 +34,11 @@ left:33%;
 
 .msg{
 position:absolute;
-top:60%;
+top:10%;
 left:33%;
-color:red;
+    color: #664d03;
+    background-color: #fff3cd;
+    border-color: #ffecb5;
 
 }
 </style>
@@ -48,18 +50,25 @@ color:red;
 	<h1>Bem Vindo ao Curso de JSP</h1>
 
 	
-	<form action="ServletLogin" method="post"  class="row g-3">
+	<form action="ServletLogin" method="post"  class="row g-3 needs-validation" novalidate>
           <!--regra para validação de login-->
 		 <input type="hidden" value= "<%= request.getParameter("url") %>" name="url">
 		 
-		 <div class="col-md-6">
+		 <div class="mb-3">
 		 <label class="form-label">Login:</label>
-		 <input class="form-control" type="text" id="login" name="login">
+		 <input class="form-control" type="text" id="login" name="login" required="required">
+		  <div class="invalid-feedback">
+      Informe um login!
+          </div>
 		 </div>
 		 
-		 <div class="col-md-6">
+		 <div class="mb-3">
 		 <label class="form-label">Senha:</label>
-		 <input class="form-control" type="password" id="senha" name="senha">
+		 <input class="form-control" type="password" id="senha" name="senha" required="required">
+		  <div class="invalid-feedback">
+      Informe uma Senha!
+          </div>
+		 
 		 </div>
 		 <button class="btn btn-primary" type="submit" value="Acessar">Logar</button> 
 		 
@@ -69,5 +78,29 @@ color:red;
 		 	
 		 	<!-- Js do BootStrap -->
 		 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+(function () {
+	  'use strict'
+
+	  // validação de campos com bootstrap
+	  var forms = document.querySelectorAll('.needs-validation')
+
+	  // Loop over them and prevent submission
+	  Array.prototype.slice.call(forms)
+	    .forEach(function (form) {
+	      form.addEventListener('submit', function (event) {
+	        if (!form.checkValidity()) {
+	          event.preventDefault()
+	          event.stopPropagation()
+	        }
+
+	        form.classList.add('was-validated')
+	      }, false)
+	    })
+	})()
+
+</script>
 </body>
 </html>
