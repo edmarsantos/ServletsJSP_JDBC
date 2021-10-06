@@ -53,25 +53,26 @@
 
 
 											<form class="form-material"  action="<%= request.getContextPath()%>/ServletUsuarioController" method="post">
+													
 													<div class="form-group form-default">
-													<input type="text" name="id" id="id" class="form-control" readonly="readonly"> 
+													<input type="text" name="id" id="id" class="form-control" readonly="readonly" value="${modolLogin.id }"> 
 													<span class="form-bar"></span> <label class="float-label">Id</label>
 															</div>
 															<div class="form-group form-default">
-																<input type="text" name="nome" id="nome"
-																	class="form-control" required="required" value="Nome">
+																<input type="text" name="nome" id="nome" 
+																	class="form-control" required="required" value="${modolLogin.nome }">
 																<span class="form-bar"></span> <label
 																	class="float-label">Nome</label>
 															</div>
 															
 															<div class="form-group form-default">
-																<input type="email" name="email" id="email" autocomplete="off"
-																	class="form-control" required="required"> <span
+																<input type="email" name="email" id="email" autocomplete="off" 
+																	class="form-control" required="required" value="${modolLogin.email}"> <span
 																	class="form-bar"></span> <label class="float-label">E-mail</label>
 															</div>
 															<div class="form-group form-default">
-																<input type="text" name="login" id="login"
-																	class="form-control" required="required" value="Nome">
+																<input type="text" name="login" id="login" 
+																	class="form-control" required="required" value="${modolLogin.senha }">
 																<span class="form-bar"></span> <label
 																	class="float-label">Login</label>
 															</div>
@@ -79,19 +80,16 @@
 															
 															
 															<div class="form-group form-default">
-																<input type="password" name="senha" id="senha" autocomplete="off"
-																	class="form-control" required="required"> <span
+																<input type="password" name="senha" id="senha" autocomplete="off" 
+																	class="form-control" required="required" value="${modolLogin.senha }"> <span
 																	class="form-bar"></span> <label class="float-label">Senha</label>
 															</div>
 															
-	        <button class="btn btn-primary waves-effect waves-light">Primary Button</button>
-			<button class="btn btn-success waves-effect waves-light">Success Button</button>
-            <button class="btn btn-info waves-effect waves-light">Info Button</button>
-            <button class="btn btn-warning waves-effect waves-light">Warning Button</button>
-            <button class="btn btn-danger waves-effect waves-light">Danger Button</button>
-            <button class="btn btn-inverse waves-effect waves-light">Inverse Button</button>
-            <button class="btn btn-disabled disabled waves-effect waves-light">Disabled Button</button>
-														</form>
+	        <button class="btn btn-primary waves-effect waves-light">Novo</button>
+			<button class="btn btn-success waves-effect waves-light">Salvar</button>
+            <button class="btn btn-info waves-effect waves-light">Excluir</button>
+            											</form>
+            											<span>${msg}</span>
 													</div>
 													<!-- Page-body end -->
 												</div>
