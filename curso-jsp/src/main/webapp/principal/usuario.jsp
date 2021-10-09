@@ -72,7 +72,7 @@
 															</div>
 															<div class="form-group form-default">
 																<input type="text" name="login" id="login" 
-																	class="form-control" required="required" value="${modolLogin.senha }">
+																	class="form-control" required="required" value="${modolLogin.login }">
 																<span class="form-bar"></span> <label
 																	class="float-label">Login</label>
 															</div>

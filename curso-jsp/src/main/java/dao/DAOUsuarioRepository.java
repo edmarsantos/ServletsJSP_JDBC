@@ -22,6 +22,8 @@ public class DAOUsuarioRepository {
 	// void nao retornar nada e qdo coloca ModelLogin ele retorna par a ModelLogin
 	public ModelLogin gravarUsuario(ModelLogin objeto) throws Exception  {
 		
+		if(objeto.isNovo()) {
+		
 		String sql = "INSERT INTO public.model_login(login, senha, nome, email)VALUES (?, ?, ?, ?);";
 				
 		PreparedStatement preparedSql = connection.prepareStatement(sql);
@@ -32,8 +34,22 @@ public class DAOUsuarioRepository {
 				preparedSql.setString(4, objeto.getEmail());
 				
 				preparedSql.execute();
-		
 				connection.commit();
+		}else {
+			String sql = "UPDATE public.model_login SET login=?, senha=?, nome=?, email=?  WHERE id =" + objeto.getId() +" ;";
+
+			PreparedStatement preparedSql = connection.prepareStatement(sql);
+			
+			preparedSql.setString(1, objeto.getLogin());
+			preparedSql.setString(2, objeto.getSenha());
+			preparedSql.setString(3, objeto.getNome());
+			preparedSql.setString(4, objeto.getEmail());
+			
+			preparedSql.executeUpdate();
+			connection.commit();
+		}
+				
+				
 		 return this.consultarUsuario(objeto.getLogin());
 		
 	}
@@ -41,6 +57,7 @@ public class DAOUsuarioRepository {
 	public ModelLogin consultarUsuario(String login) throws Exception {
 		
 		ModelLogin modelLogin = new ModelLogin();
+		
 		
 		String sql = "select * from model_login where upper(login) = upper('"+ login +"')";
 		PreparedStatement statement = connection.prepareStatement(sql);
@@ -52,6 +69,7 @@ public class DAOUsuarioRepository {
 		
 			modelLogin.setId(resultado.getLong("id"));
 			modelLogin.setEmail(resultado.getString("email"));
+			modelLogin.setNome(resultado.getString("nome"));
 			modelLogin.setLogin(resultado.getString("login"));
 			modelLogin.setSenha(resultado.getString("senha"));
 		
