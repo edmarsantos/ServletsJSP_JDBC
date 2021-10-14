@@ -91,9 +91,9 @@
 								<!-- colocando o type button ele nao envia o formulario -->							
 	        <button type="button" class="btn btn-primary waves-effect waves-light"  onclick="limparform();">Novo</button>
 			<button class="btn btn-success waves-effect waves-light">Salvar</button>
-            <button  type="button" class="btn btn-info waves-effect waves-light" onclick="criarDelete();">Excluir</button>
+            <button  type="button" class="btn btn-info waves-effect waves-light" onclick="criarDeleteComAjax();">Excluir</button>
             											</form>
-            											<span>${msg}</span>
+            											<span id="msg">${msg}</span>
 													</div>
 													<!-- Page-body end -->
 												</div>
@@ -110,13 +110,47 @@
 					<!-- include do javascript Jquery -->
 					<jsp:include page="javascriptfile.jsp"></jsp:include>
 					
+<!-- 					xhr -> detalhes do erro,status -> do erro ,errorThorwn -> excessao do erro  -->
 					<script type="text/javascript">
 					
+					
+					function criarDeleteComAjax(){
+						
+						if(confirm('Deseja Realmente excluir os dados?')){
+							
+						var urlAction = document.getElementById("formUser").action;
+						var idUser = document.getElementById("id").value;
+						
+						$.ajax({
+						
+							method:"get",
+						    url:urlAction,
+						    data: "id=" + idUser + "&acao=deletarajax",
+						    success:function(response){
+						    	
+						    	limparform();
+						    	document.getElementById('msg').textContent = response;
+						    }
+							
+						}).fail(function(xhr,status,errorThorwn){
+						alert('Erro ao deletar usuario por id:'+ xhr.responseText);
+						});
+						
+					}
+					}
+					
+					
+					
 					function criarDelete(){
+						
+						if(confirm('Deseja Realmente excluir os dados?')){
+						
 						document.getElementById("formUser").method = 'get';
 						document.getElementById("acao").value = 'deletar';
 						document.getElementById("formUser").submit();
-					}
+					
+						}
+						}
 					
 					
 					

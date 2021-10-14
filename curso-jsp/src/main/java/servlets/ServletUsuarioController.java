@@ -26,14 +26,24 @@ public class ServletUsuarioController extends HttpServlet {
 		try {
 			
 		String acao = request.getParameter("acao");
-		
+		//regra delete normal sem ajax
 		if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar")) {
 			String idUser = request.getParameter("id");
 			daoUsuarioRepository.deletarUser(idUser);
 			request.setAttribute("msg", "Excluido com sucesso!");
 			
-		}
-		request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			
+		}else  //regra delete com ajax
+			if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarajax")) {
+				String idUser = request.getParameter("id");
+				daoUsuarioRepository.deletarUser(idUser);
+				//request.setAttribute("msg", "Excluido com sucesso!"); com a ajax nao pode usar o request
+				response.getWriter().write("Excluido com sucesso!");
+			}else {
+				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			}
+		
 		
 		} catch (Exception e) {
 			
