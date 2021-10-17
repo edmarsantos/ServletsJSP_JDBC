@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.DAOLoginRepository;
 import dao.DAOUsuarioRepository;
@@ -34,12 +37,25 @@ public class ServletUsuarioController extends HttpServlet {
 			
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			
-		}else  //regra delete com ajax
-			if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarajax")) {
+			//regra delete com ajax
+		}else if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarajax")) {
 				String idUser = request.getParameter("id");
 				daoUsuarioRepository.deletarUser(idUser);
 				//request.setAttribute("msg", "Excluido com sucesso!"); com a ajax nao pode usar o request
 				response.getWriter().write("Excluido com sucesso!");
+		}else if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUserAjax")){ 
+				
+			String  nomeBusca = request.getParameter("nomeBusca");
+			
+			
+			
+			  List<ModelLogin> dadosJsonUser =
+			  daoUsuarioRepository.consultarUsuarioList(nomeBusca);
+			  
+			  //ObjectMapper vem do repositorio maven Jackson databind instalado no arquivo	pom.xml 
+			  ObjectMapper mapper =new ObjectMapper(); String json =
+			  mapper.writeValueAsString(dadosJsonUser); response.getWriter().write(json);
+			 	
 			}else {
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
