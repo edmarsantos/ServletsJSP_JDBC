@@ -133,13 +133,13 @@
   </div>
 </div>
 
-<table class="table">
+<div style="height:300px;overflow:scroll;">
+<table class="table" id="tabelaresultados">
   <thead>
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Nome</th>
       <th scope="col">Ver</th>
-
     </tr>
   </thead>
   <tbody>
@@ -147,6 +147,9 @@
   </tbody>
 </table>
 
+
+</div>
+<span id="totalResultados"></span>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -176,7 +179,20 @@
 							    url:urlAction,
 							    data: "nomeBusca=" + nomeBusca + "&acao=buscarUserAjax",
 							    success:function(response){
-							    	}
+							    	
+							    var json = JSON.parse(response);
+							    
+							    $('#tabelaresultados > tbody > tr').remove();
+							    
+							    for(var p = 0;p < json.length; p++){
+							    	
+							      /* $('#tabelaresultados > tbody').append('<tr> <td>'+ json[p].id + '</td> <tr>' + json[p].nome + '</td></tr>'); */
+							    	 $('#tabelaresultados > tbody').append('<tr> <td>'+json[p].id+  '</td> <td>' + json[p].nome +  '</td> <td><button type="button" class="btn btn-info">Ver</button></td></tr>');
+							    }
+							    
+							    document.getElementById('totalResultados').textContent = 'Resultados: ' + json.length;
+							    
+							    }
 								
 							}).fail(function(xhr,status,errorThorwn){
 							alert('Erro ao deletar usuario por id:'+ xhr.responseText);

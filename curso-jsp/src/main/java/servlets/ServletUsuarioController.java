@@ -53,8 +53,9 @@ public class ServletUsuarioController extends HttpServlet {
 			  daoUsuarioRepository.consultarUsuarioList(nomeBusca);
 			  
 			  //ObjectMapper vem do repositorio maven Jackson databind instalado no arquivo	pom.xml 
-			  ObjectMapper mapper =new ObjectMapper(); String json =
-			  mapper.writeValueAsString(dadosJsonUser); response.getWriter().write(json);
+			  ObjectMapper mapper =new ObjectMapper();
+			  String json = mapper.writeValueAsString(dadosJsonUser); 
+			  response.getWriter().write(json);
 			 	
 			}else {
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
