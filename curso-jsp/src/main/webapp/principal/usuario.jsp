@@ -164,6 +164,17 @@
 <!-- 					xhr -> detalhes do erro,status -> do erro ,errorThorwn -> excessao do erro  -->
 					<script type="text/javascript">
 					
+					function verEditar(id){
+						
+						/* urlAction passa o valor de  http://localhost:8080/curso-jsp/ServletUsuarioController */
+						var urlAction = document.getElementById("formUser").action;
+						
+						window.location.href = urlAction + '?acao=buscarEditar&id='+id;
+						
+					}
+					
+					
+					
 					function buscarUsuario(){
 						
 						var nomeBusca = document.getElementById('nomeBusca').value;
@@ -186,8 +197,8 @@
 							    
 							    for(var p = 0;p < json.length; p++){
 							    	
-							      /* $('#tabelaresultados > tbody').append('<tr> <td>'+ json[p].id + '</td> <tr>' + json[p].nome + '</td></tr>'); */
-							    	 $('#tabelaresultados > tbody').append('<tr> <td>'+json[p].id+  '</td> <td>' + json[p].nome +  '</td> <td><button type="button" class="btn btn-info">Ver</button></td></tr>');
+							      /* $('#tabelaresultados > tbody').append('<tr> <td>'+ json[p].id + '</td> <tr>' + json[p].nome + '</td></tr>');  +*/
+							    	 $('#tabelaresultados > tbody').append('<tr> <td>'+json[p].id+  '</td> <td>' + json[p].nome +  '</td> <td><button onclick="verEditar('+json[p].id+')" type="button" class="btn btn-info">Ver</button></td></tr>');
 							    }
 							    
 							    document.getElementById('totalResultados').textContent = 'Resultados: ' + json.length;
