@@ -33,6 +33,11 @@ public class ServletUsuarioController extends HttpServlet {
 		if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar")) {
 			String idUser = request.getParameter("id");
 			daoUsuarioRepository.deletarUser(idUser);
+			
+			//carregar a list de usuarios
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList();
+			request.setAttribute("modelLogins", modelLogins);
+						
 			request.setAttribute("msg", "Excluido com sucesso!");
 			
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
@@ -63,11 +68,29 @@ public class ServletUsuarioController extends HttpServlet {
 			
 			ModelLogin modelLogin = daoUsuarioRepository.consultarUsuarioID(id);
 			
+			//carregar a list de usuarios
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList();
+			request.setAttribute("modelLogins", modelLogins);
+			
+			
 			request.setAttribute("msg", "Usuário em Edição");
 			request.setAttribute("modolLogin", modelLogin);
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			  
-			}else {
+		}else if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUser")){
+			
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList();
+			
+			request.setAttribute("msg", "Usuário Carregados");
+			request.setAttribute("modelLogins", modelLogins);
+			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+		
+		}else {
+			
+			//carregar a list de usuarios
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList();
+			request.setAttribute("modelLogins", modelLogins);
+			
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 		
@@ -119,7 +142,10 @@ public class ServletUsuarioController extends HttpServlet {
 		}
 		
 		
- 
+		//carregar a list de usuarios
+		List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList();
+		request.setAttribute("modelLogins", modelLogins);
+		
 		
 		request.setAttribute("msg", msg);
 		request.setAttribute("modolLogin", modelLogin);
