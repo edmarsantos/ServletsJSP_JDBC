@@ -1,3 +1,4 @@
+<%@page import="model.ModelLogin"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 	
@@ -81,11 +82,41 @@
 															<select class="form-control"
 															         aria-label="Default select example" name="perfil">
 															         <option disabled>Selecione o Perfil</option>
-															         <option Value="ADMIN">Administrador</option>
-															         <option Value="SECRETARIA">Secretária</option>
-															         <option Value="AUXILIAR">Auxiliar</option>
+															         <option Value="ADMIN" <% 
+															         
+															           ModelLogin modelLogin = (ModelLogin) request.getAttribute("modolLogin");
+															         
+															            if (modelLogin !=null && modelLogin.getPerfil().equals("ADMIN")){
+															        	out.print(" ");
+															        	out.print("selected=\"selected\"");
+															        	out.print(" ");
+															        	} %> >Administrador</option>
+															         <option Value="SECRETARIA" 
+															         
+															         <% 
+															         
+															          modelLogin = (ModelLogin) request.getAttribute("modolLogin");
+															         
+															            if (modelLogin !=null && modelLogin.getPerfil().equals("SECRETARIA")){
+															        	out.print(" ");
+															        	out.print("selected=\"selected\"");
+															        	out.print(" ");
+															        	} %>
+															         
+															         >Secretária</option>
+															         <option Value="SECRETARIA" <% 
+															         
+															           modelLogin = (ModelLogin) request.getAttribute("modolLogin");
+															         
+															            if (modelLogin !=null && modelLogin.getPerfil().equals("AUXILIAR")){
+															        	out.print(" ");
+															        	out.print("selected=\"selected\"");
+															        	out.print(" ");
+															        	} %>
+															        
+															         >Auxiliar</option>
 															         <span class="form-bar"></span> 
-																	<label class="float-label">E-mail</label>
+																	<label class="float-label">Perfil:</label>
 															
 														    </select>
 															</div>
