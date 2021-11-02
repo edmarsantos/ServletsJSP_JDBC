@@ -72,10 +72,24 @@
 															
 															<div class="form-group form-default form-static-label">
 																<input type="email" name="email" id="email" autocomplete="off" 
-																	class="form-control" required="required" value="${modolLogin.email}"> <span
-																	class="form-bar"></span> 
+																	class="form-control" required="required" value="${modolLogin.email}"> 
+																	<span class="form-bar"></span> 
 																	<label class="float-label">E-mail</label>
 															</div>
+															
+															<div class="form-group form-default form-static-label">
+															<select class="form-control"
+															         aria-label="Default select example" name="perfil">
+															         <option disabled>Selecione o Perfil</option>
+															         <option Value="ADMIN">Administrador</option>
+															         <option Value="SECRETARIA">Secretária</option>
+															         <option Value="AUXILIAR">Auxiliar</option>
+															         <span class="form-bar"></span> 
+																	<label class="float-label">E-mail</label>
+															
+														    </select>
+															</div>
+															<br>
 															<div class="form-group form-default form-static-label">
 																<input type="text" name="login" id="login" 
 																	class="form-control" required="required" value="${modolLogin.login }">

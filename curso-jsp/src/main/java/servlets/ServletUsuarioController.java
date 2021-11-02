@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.util.List;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.DAOLoginRepository;
@@ -15,8 +16,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.ModelLogin;
 
-@WebServlet("/ServletUsuarioController")
-public class ServletUsuarioController extends HttpServlet {
+@WebServlet(urlPatterns ={"/ServletUsuarioController"})
+public class ServletUsuarioController extends ServletGenericUtil {
 	private static final long serialVersionUID = 1L;
 
 	private DAOUsuarioRepository daoUsuarioRepository = new DAOUsuarioRepository();
@@ -35,7 +36,7 @@ public class ServletUsuarioController extends HttpServlet {
 			daoUsuarioRepository.deletarUser(idUser);
 			
 			//carregar a list de usuarios
-			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList();
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList(super.getUserLogado(request));
 			request.setAttribute("modelLogins", modelLogins);
 						
 			request.setAttribute("msg", "Excluido com sucesso!");
@@ -52,10 +53,7 @@ public class ServletUsuarioController extends HttpServlet {
 				
 			String  nomeBusca = request.getParameter("nomeBusca");
 			
-			
-			
-			  List<ModelLogin> dadosJsonUser =
-			  daoUsuarioRepository.consultarUsuarioList(nomeBusca);
+			List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultarUsuarioList(nomeBusca,super.getUserLogado(request));
 			  
 			  //ObjectMapper vem do repositorio maven Jackson databind instalado no arquivo	pom.xml 
 			  ObjectMapper mapper =new ObjectMapper();
@@ -66,10 +64,10 @@ public class ServletUsuarioController extends HttpServlet {
 			  
 			String id  = request.getParameter("id"); 
 			
-			ModelLogin modelLogin = daoUsuarioRepository.consultarUsuarioID(id);
+			ModelLogin modelLogin = daoUsuarioRepository.consultarUsuarioID(id, super.getUserLogado(request));
 			
 			//carregar a list de usuarios
-			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList();
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList(super.getUserLogado(request));
 			request.setAttribute("modelLogins", modelLogins);
 			
 			
@@ -79,7 +77,7 @@ public class ServletUsuarioController extends HttpServlet {
 			  
 		}else if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUser")){
 			
-			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList();
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList(super.getUserLogado(request));
 			
 			request.setAttribute("msg", "Usuário Carregados");
 			request.setAttribute("modelLogins", modelLogins);
@@ -88,7 +86,7 @@ public class ServletUsuarioController extends HttpServlet {
 		}else {
 			
 			//carregar a list de usuarios
-			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList();
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList(super.getUserLogado(request));
 			request.setAttribute("modelLogins", modelLogins);
 			
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
@@ -118,6 +116,7 @@ public class ServletUsuarioController extends HttpServlet {
 		String email = request.getParameter("email");
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
+		String perfil = request.getParameter("perfil");
 		
 		ModelLogin modelLogin = new ModelLogin();
 		//id como if operador ternario
@@ -126,6 +125,7 @@ public class ServletUsuarioController extends HttpServlet {
 		modelLogin.setEmail(email);
 		modelLogin.setLogin(login);
 		modelLogin.setSenha(senha);
+		modelLogin.setPerfil(perfil);
 		
 		
 		if(daoUsuarioRepository.validarLogin(modelLogin.getLogin()) && modelLogin.getId() == null) {
@@ -138,12 +138,12 @@ public class ServletUsuarioController extends HttpServlet {
             	msg = "Atualizado com Sucesso!";
             }
 			
-			modelLogin =  daoUsuarioRepository.gravarUsuario(modelLogin);	
+			modelLogin =  daoUsuarioRepository.gravarUsuario(modelLogin,super.getUserLogado(request));	
 		}
 		
 		
 		//carregar a list de usuarios
-		List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList();
+		List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList(super.getUserLogado(request));
 		request.setAttribute("modelLogins", modelLogins);
 		
 		
