@@ -104,7 +104,7 @@
 															        	} %>
 															         
 															         >Secretária</option>
-															         <option Value="SECRETARIA" <% 
+															         <option Value="AUXILIAR" <% 
 															         
 															           modelLogin = (ModelLogin) request.getAttribute("modolLogin");
 															         
@@ -134,6 +134,29 @@
 																<input type="password" name="senha" id="senha"  
 																	class="form-control" required="required" autocomplete="off" value="${modolLogin.senha }"> <span
 																	class="form-bar"></span> <label class="float-label">Senha</label>
+															</div>
+															
+															<div class="form-group form-default form-static-label">
+															<input type="radio" name="sexo" checked="checked" value="MASCULINO"
+															     <% 
+															           modelLogin = (ModelLogin) request.getAttribute("modolLogin");
+															         
+															            if (modelLogin !=null && modelLogin.getSexo().equals("MASCULINO")){
+															        	out.print(" ");
+															        	out.print("checked=\"checked\"");
+															        	out.print(" ");
+															 	} %> 
+															>Masculino</>
+															<input type="radio" name="sexo" value="FEMININO" 
+															 <% 
+															           modelLogin = (ModelLogin) request.getAttribute("modolLogin");
+															         
+															            if (modelLogin !=null && modelLogin.getSexo().equals("FEMININO")){
+															        	out.print(" ");
+															        	out.print("checked=\"checked\"");
+															        	out.print(" ");
+															 	} %>
+															>Feminino</>
 															</div>
 								
 								<!-- colocando o type button ele nao envia o formulario -->							
