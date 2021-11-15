@@ -6,6 +6,7 @@ import dao.DAOLoginRepository;
 import dao.DAOUsuarioRepository;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -90,8 +91,7 @@ public class ServletLogin extends HttpServlet {
 				redirecionar.forward(request,response);
 			}
 		
-			
-			
+					
 				
 			
 			

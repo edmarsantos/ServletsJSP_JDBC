@@ -56,7 +56,7 @@
 
 
 
-											<form class="form-material"  action="<%= request.getContextPath()%>/ServletUsuarioController" method="post" id="formUser">
+											<form class="form-material" enctype="multipart/form-data" action="<%= request.getContextPath()%>/ServletUsuarioController" method="post" id="formUser">
 													
 													<input type="hidden" name="acao" id="acao" value="">
 													
@@ -64,6 +64,21 @@
 													<input type="text" name="id" id="id" class="form-control" readonly="readonly" value="${modolLogin.id }"> 
 													<span class="form-bar"></span> <label class="float-label">Id</label>
 															</div>
+															
+															<div class="form-group form-default input-group md-4">
+													                  <div class="input-group-prepend">
+													                  <c:if test="${modolLogin.fotouser != '' && modolLogin.fotouser != null}">
+													                  <img alt="Image User" id="fotoembase64" src="${modolLogin.fotouser}" with="40px" height="50px">
+													                  </c:if>
+													                  <c:if test="${modolLogin.fotouser == '' || modolLogin.fotouser == null}">
+                                                                       <img alt="Image User" id="fotoembase64" src="assets/images/user.png" with="40px" height="50px">
+                                                        			</c:if>
+													                  
+													                  </div>
+													                  <input type="file" id="fileFoto" name="fileFoto" accept="image/*" onchange="visualizarImg('fotoembase64','fileFoto');" class="form-control-file" style="margin-top: 15px; margin-left: 5px;"> 
+															</div>
+															
+															
 															<div class="form-group form-default form-static-label">
 																<input type="text" name="nome" id="nome" 
 																	class="form-control" required="required" value="${modolLogin.nome }">
@@ -258,6 +273,25 @@
 					
 <!-- 					xhr -> detalhes do erro,status -> do erro ,errorThorwn -> excessao do erro  -->
 					<script type="text/javascript">
+					
+					function visualizarImg(fotoembase64, filefoto) {
+    
+   
+    var preview = document.getElementById(fotoembase64); // campo IMG html
+    var fileUser = document.getElementById(filefoto).files[0];
+    var reader = new FileReader();
+    
+    reader.onloadend = function (){
+	    preview.src = reader.result; /*Carrega a foto na tela*/
+    };
+    
+    if (fileUser) {
+	  reader.readAsDataURL(fileUser); /*Preview da imagem*/
+    }else {
+	 preview.src=  '';
+    }
+    
+}
 					
 					function verEditar(id){
 						

@@ -40,6 +40,24 @@ public class DAOUsuarioRepository {
 				
 				preparedSql.execute();
 				connection.commit();
+				
+				if(objeto.getFotouser() !=null && !objeto.getFotouser().isEmpty()) {
+					
+					sql = " update model_login set fotouser = ?, extensaofotouser=? where login =? ";
+					
+					preparedSql = connection.prepareStatement(sql);
+					
+					preparedSql.setString(1, objeto.getFotouser());
+					preparedSql.setString(2, objeto.getExtensaofotouser());
+					preparedSql.setString(3, objeto.getLogin());
+					
+					preparedSql.execute();
+					connection.commit();
+				
+				}
+				
+				
+				
 		}else {
 			String sql = "UPDATE public.model_login SET login=?, senha=?, nome=?, email=? , perfil=?, sexo =? WHERE id =" + objeto.getId() +" ;";
 
@@ -54,6 +72,23 @@ public class DAOUsuarioRepository {
 			
 			preparedSql.executeUpdate();
 			connection.commit();
+			
+			if (objeto.getFotouser() != null && !objeto.getFotouser().isEmpty()) {
+				
+				sql = " update model_login set fotouser = ?, extensaofotouser=? where id =? ";
+				
+				preparedSql = connection.prepareStatement(sql);
+				
+				preparedSql.setString(1, objeto.getFotouser());
+				preparedSql.setString(2, objeto.getExtensaofotouser());
+				preparedSql.setLong(3, objeto.getId());
+				
+				preparedSql.execute();
+				connection.commit();
+			
+			}
+			
+			
 		}
 				
 				
@@ -140,7 +175,7 @@ public ModelLogin consultarUsuarioLogado(String login) throws Exception {
 			modelLogin.setUseradmin(resultado.getBoolean("useradmin"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
-			
+			modelLogin.setFotouser(resultado.getString("fotouser"));
 		}
 		
 
@@ -170,7 +205,9 @@ public ModelLogin consultarUsuarioID(String id,Long userLogado) throws Exception
 		modelLogin.setNome(resultado.getString("nome"));
 		modelLogin.setPerfil(resultado.getString("perfil"));
 		modelLogin.setSexo(resultado.getString("sexo"));
-	}
+		modelLogin.setFotouser(resultado.getString("fotouser"));
+		
+		}
 	
 	return modelLogin;
 	
@@ -198,7 +235,7 @@ public ModelLogin consultarUsuario(String login, Long userLogado) throws Excepti
 			modelLogin.setSenha(resultado.getString("senha"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
-			
+			modelLogin.setFotouser(resultado.getString("fotouser"));
 		}
 		
 		return modelLogin;
@@ -227,7 +264,8 @@ public ModelLogin consultarUsuario(String login) throws Exception {
     	modelLogin.setUseradmin(resultado.getBoolean("useradmin"));
 	    modelLogin.setPerfil(resultado.getString("perfil"));
 	    modelLogin.setSexo(resultado.getString("sexo"));
-	
+	    modelLogin.setFotouser(resultado.getString("fotouser"));
+	    
 	}
 	
 	return modelLogin;
