@@ -89,6 +89,19 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			request.setAttribute("modelLogins", modelLogins);
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 		
+		}else if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("downloadFoto")){
+			
+	 String idUser = request.getParameter("id");
+			 
+			 ModelLogin modelLogin =  daoUsuarioRepository.consultarUsuarioID(idUser, super.getUserLogado(request));
+			 if (modelLogin.getFotouser() != null && !modelLogin.getFotouser().isEmpty()) {
+				 
+				 response.setHeader("Content-Disposition", "attachment;filename=arquivo." + modelLogin.getExtensaofotouser()); //Content-Disposition srve para o navegador indentificar que e um dowload 
+				 response.getOutputStream().write(new Base64().decodeBase64(modelLogin.getFotouser().split("\\,")[1]));//split foi utilizado para remover "data:image/extenção;base64,..."  o split vai pegar a partir da ","
+				 
+			 }
+		
+			
 		}else {
 			
 			//carregar a list de usuarios
