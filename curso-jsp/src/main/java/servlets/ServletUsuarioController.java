@@ -46,7 +46,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			request.setAttribute("modelLogins", modelLogins);
 						
 			request.setAttribute("msg", "Excluido com sucesso!");
-			
+			request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			
 			//regra delete com ajax
@@ -79,6 +79,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			
 			request.setAttribute("msg", "Usuário em Edição");
 			request.setAttribute("modolLogin", modelLogin);
+			request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			  
 		}else if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUser")){
@@ -87,6 +88,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			
 			request.setAttribute("msg", "Usuário Carregados");
 			request.setAttribute("modelLogins", modelLogins);
+			request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 		
 		}else if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("downloadFoto")){
@@ -102,12 +104,23 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			 }
 		
 			
+		
+		}else if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("paginar")){
+		Integer offset = Integer.parseInt(request.getParameter("pagina"));
+		
+		List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioListPaginada(this.getUserLogado(request), offset);
+		request.setAttribute("modelLogins", modelLogins);
+		request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
+			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+	
+		
+		
 		}else {
 			
 			//carregar a list de usuarios
 			List<ModelLogin> modelLogins = daoUsuarioRepository.consultarUsuarioList(super.getUserLogado(request));
 			request.setAttribute("modelLogins", modelLogins);
-			
+			request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 		
@@ -199,6 +212,7 @@ if (ServletFileUpload.isMultipartContent(request)) {
 		
 		request.setAttribute("msg", msg);
 		request.setAttribute("modolLogin", modelLogin);
+		request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
 		request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 		
 		}catch (Exception e) {
