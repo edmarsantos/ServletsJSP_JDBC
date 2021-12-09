@@ -64,9 +64,29 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			  //ObjectMapper vem do repositorio maven Jackson databind instalado no arquivo	pom.xml 
 			  ObjectMapper mapper =new ObjectMapper();
 			  String json = mapper.writeValueAsString(dadosJsonUser); 
+			  
+			  //addheader serve para nao mistura as enviando a informação de forma separado
+			  response.addHeader("totalPagina", "" + daoUsuarioRepository.consultarUsuarioListTotalPaginaPaginacao(nomeBusca, super.getUserLogado(request)));
 			  response.getWriter().write(json);
 			 	
-		}else if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")){  
+		}		else if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUserAjaxPage")){ 
+			
+			String  nomeBusca = request.getParameter("nomeBusca");
+			String  pagina = request.getParameter("pagina");
+			
+			List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultarUsuarioListOffset(nomeBusca,super.getUserLogado(request), pagina);
+			  
+			  //ObjectMapper vem do repositorio maven Jackson databind instalado no arquivo	pom.xml 
+			  ObjectMapper mapper =new ObjectMapper();
+			  String json = mapper.writeValueAsString(dadosJsonUser); 
+			  
+			  //addheader serve para nao mistura as enviando a informação de forma separado
+			  response.addHeader("totalPagina", "" + daoUsuarioRepository.consultarUsuarioListTotalPaginaPaginacao(nomeBusca, super.getUserLogado(request)));
+			  response.getWriter().write(json);
+			 	
+		}
+		
+		else if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")){  
 			  
 			String id  = request.getParameter("id"); 
 			

@@ -190,6 +190,67 @@ public List<ModelLogin> consultarUsuarioList(Long userLogado) throws SQLExceptio
 	}
 	
 	
+public int consultarUsuarioListTotalPaginaPaginacao(String nome,Long userLogado) throws Exception {
+	
+	String Sql = "select count(1) as total from model_login where upper(nome) like upper(?) and useradmin is false AND USUARIO_ID = ?" + " limit 5 " ;
+	PreparedStatement preparedStatement = connection.prepareStatement(Sql);
+	preparedStatement.setString(1, "%"+nome +"%");
+	preparedStatement.setLong(2, userLogado );
+	
+	ResultSet resultado = preparedStatement.executeQuery();
+	
+	resultado.next();
+	
+	Double cadastros = resultado.getDouble("total");
+	
+	Double porpagina = 5.0;
+	
+	Double pagina = cadastros / porpagina;
+	
+	Double resto = pagina % 2;
+	
+	if(resto > 0) {
+		pagina ++;
+	}	
+	
+	return pagina.intValue();
+
+}
+
+
+public List<ModelLogin> consultarUsuarioListOffset(String nome,Long userLogado,String offset) throws SQLException {
+	
+	List<ModelLogin> retorno = new ArrayList<ModelLogin>();
+	
+	String Sql = "select * from model_login where upper(nome) like upper(?) and useradmin is false AND USUARIO_ID = ? offset "+ offset +" limit 5 " ;
+	PreparedStatement preparedStatement = connection.prepareStatement(Sql);
+	preparedStatement.setString(1, "%"+nome +"%");
+	preparedStatement.setLong(2, userLogado );
+	
+	
+	ResultSet resultado = preparedStatement.executeQuery();
+	
+	while (resultado.next()) {
+		
+		ModelLogin modelLogin = new ModelLogin();
+		
+		modelLogin.setEmail(resultado.getString("email"));
+		modelLogin.setId(resultado.getLong("id"));
+		modelLogin.setLogin(resultado.getString("login"));
+		modelLogin.setNome(resultado.getString("nome"));
+		modelLogin.setPerfil(resultado.getString("perfil"));
+		modelLogin.setSexo(resultado.getString("sexo"));
+		
+		retorno.add(modelLogin);
+		
+	}
+	
+	
+	return retorno;
+}
+
+
+
 	public List<ModelLogin> consultarUsuarioList(String nome,Long userLogado) throws SQLException {
 		
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
