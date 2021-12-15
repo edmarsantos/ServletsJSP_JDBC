@@ -309,7 +309,7 @@ public ModelLogin consultarUsuarioLogado(String login) throws Exception {
 			modelLogin.setBairro(resultado.getString("bairro"));
 			modelLogin.setLocalidade(resultado.getString("localidade"));
 			modelLogin.setUf(resultado.getString("uf"));
-			modelLogin.setSexo(resultado.getString("numero"));
+			modelLogin.setNumero(resultado.getString("numero"));
 			
 		}
 		
@@ -346,7 +346,7 @@ public ModelLogin consultarUsuarioID(Long id) throws Exception {
 		modelLogin.setBairro(resultado.getString("bairro"));
 		modelLogin.setLocalidade(resultado.getString("localidade"));
 		modelLogin.setUf(resultado.getString("uf"));
-		modelLogin.setSexo(resultado.getString("numero"));
+		modelLogin.setNumero(resultado.getString("numero"));
 		
 		}
 	
@@ -384,7 +384,7 @@ public ModelLogin consultarUsuarioID(String id,Long userLogado) throws Exception
 		modelLogin.setBairro(resultado.getString("bairro"));
 		modelLogin.setLocalidade(resultado.getString("localidade"));
 		modelLogin.setUf(resultado.getString("uf"));
-		modelLogin.setSexo(resultado.getString("numero"));
+		modelLogin.setNumero(resultado.getString("numero"));
 		
 		}
 	
@@ -421,7 +421,7 @@ public ModelLogin consultarUsuario(String login, Long userLogado) throws Excepti
 			modelLogin.setBairro(resultado.getString("bairro"));
 			modelLogin.setLocalidade(resultado.getString("localidade"));
 			modelLogin.setUf(resultado.getString("uf"));
-			modelLogin.setSexo(resultado.getString("numero"));
+			modelLogin.setNumero(resultado.getString("numero"));
 		
 		
 		}
@@ -459,7 +459,7 @@ public ModelLogin consultarUsuario(String login) throws Exception {
 		modelLogin.setBairro(resultado.getString("bairro"));
 		modelLogin.setLocalidade(resultado.getString("localidade"));
 		modelLogin.setUf(resultado.getString("uf"));
-		modelLogin.setSexo(resultado.getString("numero"));
+		modelLogin.setNumero(resultado.getString("numero"));
 	}
 	
 	return modelLogin;

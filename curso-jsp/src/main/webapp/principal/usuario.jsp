@@ -62,7 +62,7 @@
 
 															<input type="hidden" name="acao" id="acao" value="">
 
-															<div class="form-group form-default">
+															<div class="form-group form-default form-static-label">
 																<input type="text" name="id" id="id"
 																	class="form-control" readonly="readonly"
 																	value="${modolLogin.id }"> <span
@@ -208,25 +208,30 @@ if (modelLogin != null && modelLogin.getPerfil().equals("AUXILIAR")) {
 																	class="float-label">Senha</label>
 															</div>
 
-															<div class="form-group form-default form-static-label">
-																<input type="radio" name="sexo" checked="checked"
-																	value="MASCULINO"
-																	<%modelLogin = (ModelLogin) request.getAttribute("modolLogin");
-
-if (modelLogin != null && modelLogin.getSexo().equals("MASCULINO")) {
-	out.print(" ");
-	out.print("checked=\"checked\"");
-	out.print(" ");
-}%>>Masculino</>
-																<input type="radio" name="sexo" value="FEMININO"
-																	<%modelLogin = (ModelLogin) request.getAttribute("modolLogin");
-
-if (modelLogin != null && modelLogin.getSexo().equals("FEMININO")) {
-	out.print(" ");
-	out.print("checked=\"checked\"");
-	out.print(" ");
-}%>>Feminino</>
-															</div>
+<div class="form-group form-default form-static-label">
+                                                             <input type="radio" name="sexo" checked="checked" value="MASCULINO"  
+                                                             
+                                                             <% modelLogin = (ModelLogin) request.getAttribute("modolLogin");
+                                                             if (modelLogin != null && modelLogin.getSexo().equals("MASCULINO")) {
+																	out.print(" ");
+															    	out.print("checked=\"checked\"");
+																	out.print(" ");
+															}                                                        
+                                                             %>
+                                                             >Masculino</>
+                                                             
+                                                             <input type="radio" name="sexo" value="FEMININO" <%
+                                                            
+                                                             modelLogin = (ModelLogin) request.getAttribute("modolLogin");
+                                                                 
+                                                             if (modelLogin != null && modelLogin.getSexo().equals("FEMININO")) {
+																	out.print(" ");
+																	 out.print("checked=\"checked\"");
+																	out.print(" ");
+															}
+                                                             
+                                                             %> >Feminino</>
+                                                            </div>
 
 															<!-- colocando o type button ele nao envia o formulario -->
 															<button type="button"
@@ -236,6 +241,7 @@ if (modelLogin != null && modelLogin.getSexo().equals("FEMININO")) {
 															<button type="button"
 																class="btn btn-info waves-effect waves-light"
 																onclick="criarDeleteComAjax();">Excluir</button>
+															<%-- <a href="<%=  request.getContextPath()%>/ServletTelefone?iduser=${modolLogin.id }" class="btn btn-primary waves-effect waves-light">Telefone</a> --%>
 															<button type="button" class="btn btn-secondary"
 																data-toggle="modal" data-target="#exampleModalUsuario">
 																Pesquisar</button>
@@ -396,7 +402,6 @@ if (modelLogin != null && modelLogin.getSexo().equals("FEMININO")) {
 						} else {
 							preview.src = '';
 						}
-
 					}
 
 					function verEditar(id) {
@@ -404,8 +409,7 @@ if (modelLogin != null && modelLogin.getSexo().equals("FEMININO")) {
 						/* urlAction passa o valor de  http://localhost:8080/curso-jsp/ServletUsuarioController */
 						var urlAction = document.getElementById("formUser").action;
 
-						window.location.href = urlAction
-								+ '?acao=buscarEditar&id=' + id;
+						window.location.href = urlAction + '?acao=buscarEditar&id=' + id;
 
 					}
 
@@ -414,15 +418,11 @@ if (modelLogin != null && modelLogin.getSexo().equals("FEMININO")) {
 						var urlAction = document.getElementById("formUser").action;
 						var nomeBusca = document.getElementById('nomeBusca').value;
 						
-						$
-								.ajax(
-										{
-
-											method : "get",
-											url : urlAction,
-											data : url,
-											success : function(response,
-													textStatus, xhr) {
+						$.ajax({
+								method : "get",
+								url : urlAction,
+								data : url,
+								success : function(response,textStatus, xhr) {
 
 												var json = JSON.parse(response);
 
