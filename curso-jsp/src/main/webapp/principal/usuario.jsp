@@ -241,7 +241,9 @@ if (modelLogin != null && modelLogin.getPerfil().equals("AUXILIAR")) {
 															<button type="button"
 																class="btn btn-info waves-effect waves-light"
 																onclick="criarDeleteComAjax();">Excluir</button>
-															<%-- <a href="<%=  request.getContextPath()%>/ServletTelefone?iduser=${modolLogin.id }" class="btn btn-primary waves-effect waves-light">Telefone</a> --%>
+															<c:if test="${modolLogin.id > 0 }">
+															<a href="<%=  request.getContextPath()%>/ServletTelefone?iduser=${modolLogin.id }" class="btn btn-primary waves-effect waves-light">Telefone</a>
+															</c:if>
 															<button type="button" class="btn btn-secondary"
 																data-toggle="modal" data-target="#exampleModalUsuario">
 																Pesquisar</button>
