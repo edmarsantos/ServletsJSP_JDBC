@@ -28,6 +28,8 @@ public class DaoTelefoneRepository {
 		String sql = "Select * from telefone where usuario_pai_id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
+		preparedStatement.setLong(1, idUserPai);
+		
         ResultSet rs = preparedStatement.executeQuery();
         
         
@@ -40,13 +42,11 @@ public class DaoTelefoneRepository {
         	modelTelefone.setUsuario_cad_id(daoUsuarioRepository.consultarUsuarioID(rs.getLong("usuario_cad_id")));
         	modelTelefone.setUsuario_pai_id(daoUsuarioRepository.consultarUsuarioID(rs.getLong("usuario_pai_id")));
         	
-        	
+        
+        	retorno.add(modelTelefone);
         }
-        
-        
-        
-		connection.commit();
-		return null;
+               
+        return retorno;
 
 	
 	}
@@ -69,7 +69,7 @@ public class DaoTelefoneRepository {
 
 	}
 
-	public void deletar(Long id) throws Exception {
+	public void deletarFone(Long id) throws Exception {
 
 		String sql = "delete from telefone where id=?";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
