@@ -15,7 +15,7 @@
       <meta name="description" content="Projeto de Estudo Feito em Jsp" /><!-- serve para divulgação do Site --> 
       <meta name="author" content="Edmar Santos" />
       <!-- Favicon icon -->
-      <link rel="icon" href="<%= request.getContextPath() %>/assets/images/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="<%= request.getContextPath() %>/assets/images/icone_redekrill.ico" type="image/x-icon">
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
     <!-- waves.css -->
@@ -34,4 +34,8 @@
         <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
       <!-- Style.css -->
       <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/assets/css/style.css">
+ 
+ <!-- css utilizado para utilizar calendario smoothness/jquery-ui.css -->
+ <link href="https://code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css" rel="stylesheet">
+ 
   </head>

@@ -26,7 +26,7 @@ public class DAOUsuarioRepository {
 		
 		if(objeto.isNovo()) {
 		
-		String sql = "INSERT INTO public.model_login(login, senha, nome, email,usuario_id,perfil,sexo,cep ,  logradouro ,  bairro ,  localidade ,  uf,  numero)VALUES (?, ?, ?, ?,?,?,?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO public.model_login(login, senha, nome, email,usuario_id,perfil,sexo,cep ,  logradouro ,  bairro ,  localidade ,  uf,  numero,datanascimento,rendalMensal)VALUES (?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?);";
 				
 		PreparedStatement preparedSql = connection.prepareStatement(sql);
 				
@@ -43,6 +43,8 @@ public class DAOUsuarioRepository {
 				preparedSql.setString(11, objeto.getLocalidade());
 				preparedSql.setString(12, objeto.getUf());
 				preparedSql.setString(13, objeto.getNumero());
+				preparedSql.setDate(14,objeto.getDataNascimento());
+				preparedSql.setDouble(15,objeto.getRendamensal());
 				
 				preparedSql.execute();
 				connection.commit();
@@ -65,7 +67,7 @@ public class DAOUsuarioRepository {
 				
 				
 		}else {
-			String sql = "UPDATE public.model_login SET login=?, senha=?, nome=?, email=? , perfil=?, sexo =? ,cep=? ,  logradouro=? ,  bairro=? ,  localidade=? ,  uf=?,  numero=? WHERE id =" + objeto.getId() +" ;";
+			String sql = "UPDATE public.model_login SET login=?, senha=?, nome=?, email=? , perfil=?, sexo =? ,cep=? ,  logradouro=? ,  bairro=? ,  localidade=? ,  uf=?,  numero=?, datanascimento=?, rendamensal=? WHERE id =" + objeto.getId() +" ;";
 
 			PreparedStatement preparedSql = connection.prepareStatement(sql);
 			
@@ -82,6 +84,8 @@ public class DAOUsuarioRepository {
 			preparedSql.setString(10, objeto.getLocalidade());
 			preparedSql.setString(11, objeto.getUf());
 			preparedSql.setString(12, objeto.getNumero());
+			preparedSql.setDate(13,objeto.getDataNascimento());
+			preparedSql.setDouble(14,objeto.getRendamensal());
 			
 			preparedSql.executeUpdate();
 			connection.commit();
@@ -310,6 +314,9 @@ public ModelLogin consultarUsuarioLogado(String login) throws Exception {
 			modelLogin.setLocalidade(resultado.getString("localidade"));
 			modelLogin.setUf(resultado.getString("uf"));
 			modelLogin.setNumero(resultado.getString("numero"));
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
+			modelLogin.setRendamensal(resultado.getDouble("rendamensal"));
+			                                               
 			
 		}
 		
@@ -347,6 +354,8 @@ public ModelLogin consultarUsuarioID(Long id) throws Exception {
 		modelLogin.setLocalidade(resultado.getString("localidade"));
 		modelLogin.setUf(resultado.getString("uf"));
 		modelLogin.setNumero(resultado.getString("numero"));
+		modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
+		modelLogin.setRendamensal(resultado.getDouble("rendamensal"));
 		
 		}
 	
@@ -385,6 +394,9 @@ public ModelLogin consultarUsuarioID(String id,Long userLogado) throws Exception
 		modelLogin.setLocalidade(resultado.getString("localidade"));
 		modelLogin.setUf(resultado.getString("uf"));
 		modelLogin.setNumero(resultado.getString("numero"));
+		modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
+		modelLogin.setRendamensal(resultado.getDouble("rendamensal"));
+		
 		
 		}
 	
@@ -422,7 +434,8 @@ public ModelLogin consultarUsuario(String login, Long userLogado) throws Excepti
 			modelLogin.setLocalidade(resultado.getString("localidade"));
 			modelLogin.setUf(resultado.getString("uf"));
 			modelLogin.setNumero(resultado.getString("numero"));
-		
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
+			modelLogin.setRendamensal(resultado.getDouble("rendamensal"));
 		
 		}
 		
@@ -460,6 +473,8 @@ public ModelLogin consultarUsuario(String login) throws Exception {
 		modelLogin.setLocalidade(resultado.getString("localidade"));
 		modelLogin.setUf(resultado.getString("uf"));
 		modelLogin.setNumero(resultado.getString("numero"));
+		modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
+		modelLogin.setRendamensal(resultado.getDouble("rendamensal"));
 	}
 	
 	return modelLogin;

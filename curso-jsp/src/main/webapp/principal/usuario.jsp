@@ -103,6 +103,20 @@
 																	value="${modolLogin.nome }"> <span
 																	class="form-bar"></span> <label class="float-label">Nome</label>
 															</div>
+															
+															<div class="form-group form-default form-static-label">
+																<input type="text" name="dataNascimento" id="dataNascimento"
+																	class="form-control" required="required"
+																	value="${modolLogin.dataNascimento }"> <span
+																	class="form-bar"></span> <label class="float-label">Data Nascimento</label>
+															</div>
+															
+															<div class="form-group form-default form-static-label">
+																<input type="text" name="rendamensal" id="rendamensal"
+																	class="form-control" required="required"
+																	value="${modolLogin.rendamensal}"> <span
+																	class="form-bar"></span> <label class="float-label">Renda Mensal</label>
+															</div>
 
 															<div class="form-group form-default form-static-label">
 																<input type="email" name="email" id="email"
@@ -184,10 +198,9 @@ if (modelLogin != null && modelLogin.getPerfil().equals("AUXILIAR")) {
 															</div>
 
 															<div class="form-group form-default form-static-label">
-																<input type="text" name="numero" id="numero"
-																	class="form-control" required="required"
-																	value="${modolLogin.numero}"> <span
-																	class="form-bar"></span> <label class="float-label">Número</label>
+																<input type="text" name="numero" id="numero" class="form-control" required="required" autocomplete="off" value="${modolLogin.numero}">
+                                                                <span class="form-bar"></span>
+                                                                <label class="float-label">Número</label>
 															</div>
 
 
@@ -372,6 +385,33 @@ if (modelLogin != null && modelLogin.getPerfil().equals("AUXILIAR")) {
 
 				<!-- 					xhr -> detalhes do erro,status -> do erro ,errorThorwn -> excessao do erro  -->
 				<script type="text/javascript">
+					
+				$('#rendamensal').maskMoney({showSymbol:true,symbol:"R$ ",decimal:",", thousands:"."});
+				
+				
+				
+				$( function() {
+					  
+					  $("#dataNascimento").datepicker({
+						    dateFormat: 'dd/mm/yy',
+						    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+						    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+						    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+						    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+						    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+						    nextText: 'Próximo',
+						    prevText: 'Anterior'
+						});
+				} );
+
+				$("#cep").keypress(function (event) {
+				       return /\d/.test(String.fromCharCode(event.keyCode)); 
+				 });
+				
+				$("#numero").keypress(function (event) {
+					   return /\d/.test(String.fromCharCode(event.keyCode)); 
+					});
+				
 					function pesquisaCep() {
 						var cep = $("#cep").val();
 

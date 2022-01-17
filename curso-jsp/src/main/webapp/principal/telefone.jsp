@@ -119,6 +119,15 @@
 
 			<!-- include do javascript Jquery -->
 			<jsp:include page="javascriptfile.jsp"></jsp:include>
+			
+			<script type="text/javascript">
+				
+				
+				$("#numero").keypress(function (event){
+					return /\d/.test(String.fromCharCode(eventKeyCode));
+				});
+				
+				</script>
 </body>
 
 </html>
