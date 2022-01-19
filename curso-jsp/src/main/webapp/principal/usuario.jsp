@@ -388,6 +388,22 @@ if (modelLogin != null && modelLogin.getPerfil().equals("AUXILIAR")) {
 					
 				$('#rendamensal').maskMoney({showSymbol:true,symbol:"R$ ",decimal:",", thousands:"."});
 				
+				const formatter = new  Intl.NumberFormat('pt-BR',{
+					currenty : 'BRL',
+					minimumFractionDigits : 2
+				});
+				
+				$("#rendamensal").val(formatter.format($("#rendamensal").val()));
+				
+				$("#rendamensal").focus();
+				
+				var dataNascimento = $("#dataNascimento").val();
+				
+				var dateFormat = new Date(dataNascimento);
+				
+				$("#dataNascimento").val(dateFormat.toLocaleDateString('pt-BR',{timeZone:'UTC'}));
+				
+				$("#nome").focus();
 				
 				
 				$( function() {
