@@ -77,7 +77,18 @@ public class DaoTelefoneRepository {
 		preparedStatement.setLong(1, id);
 		preparedStatement.executeUpdate();
 		connection.commit();
-		
-		
 		}
+	
+	public boolean existeFone(String fone ,Long iduser) throws Exception {
+		String sql = "select count(1) > 0 as existe from telefone where usuario_pai_id = ? and numero =?";
+	
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+		preparedStatement.setLong(1, iduser);
+		preparedStatement.setString(2, fone);
+	
+		ResultSet resultset = preparedStatement.executeQuery();
+	    resultset.next();		
+		return resultset.getBoolean("existe");
+	}
 }
