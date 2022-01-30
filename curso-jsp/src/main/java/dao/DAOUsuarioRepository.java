@@ -193,6 +193,34 @@ public List<ModelLogin> consultarUsuarioList(Long userLogado) throws SQLExceptio
 		return retorno;
 	}
 	
+
+public List<ModelLogin> consultarUsuarioListRel(Long userLogado) throws SQLException {
+	
+	List<ModelLogin> retorno = new ArrayList<ModelLogin>();
+	String Sql = "select * from model_login where useradmin is false and usuario_id = "+ userLogado + "  ";
+	PreparedStatement preparedStatement = connection.prepareStatement(Sql);
+	
+	ResultSet resultado = preparedStatement.executeQuery();
+	
+	while (resultado.next()) {
+		
+		ModelLogin modelLogin = new ModelLogin();
+		
+		modelLogin.setEmail(resultado.getString("email"));
+		modelLogin.setId(resultado.getLong("id"));
+		modelLogin.setLogin(resultado.getString("login"));
+		modelLogin.setNome(resultado.getString("nome"));
+		modelLogin.setPerfil(resultado.getString("perfil"));
+		modelLogin.setSexo(resultado.getString("sexo"));
+		
+		retorno.add(modelLogin);
+		
+	}
+	
+	
+	return retorno;
+}
+
 	
 public int consultarUsuarioListTotalPaginaPaginacao(String nome,Long userLogado) throws Exception {
 	

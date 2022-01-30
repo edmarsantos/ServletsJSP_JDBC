@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- obs.toda tela lembrar de inserir o jstl -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- include da Head -->
 <jsp:include page="head.jsp"></jsp:include>
@@ -74,6 +76,27 @@
 
 														</form>
 
+<div style="height: 300px; overflow: scroll;">
+															<table class="table" id="tabelaresultadosView">
+																<thead>
+																	<tr>
+																		<th scope="col">ID</th>
+																		<th scope="col">Nome</th>
+																		
+																	</tr>
+																</thead>
+																<tbody>
+																	<c:forEach items='${listaUser}' var='mL'>
+																		<tr>
+																			<td><c:out value="${mL.id}"></c:out></td>
+																			<td><c:out value="${mL.nome}"></c:out></td>
+																			
+																		</tr>
+																	</c:forEach>
+																</tbody>
+															</table>
+
+														</div>
 
 													</div>
 												</div>
