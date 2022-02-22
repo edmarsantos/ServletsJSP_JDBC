@@ -53,7 +53,7 @@
 															action="<%=request.getContextPath()%>/ServletUsuarioController"
 															method="get" id="formUser">
 															
-															<input type="hidden" name="acao" value="ImprimiRelatorioUser">
+															<input type="hidden" name="acao" id="acaoRelatorioImprimirTipo" value="ImprimiRelatorioUser">
 
 															<div class="form-row align-items-center">
 
@@ -68,11 +68,17 @@
 																	<input value="${dataFinal}" type="text" class="form-control"
 																		id="dataFinal" name="dataFinal">
 																</div>
+											
+											
+											<div CLASS="col-auto my-1">
+ <button type="button" onclick="imprimirHtml();" class="btn btn-primary"> Imprimir </button>
+ <button type="button" onclick="imprimirPdf();"  class="btn btn-primary"> Imprimir Pdf </button>
+</div>
+											
+											
 															</div>
 
-<div CLASS="col-auto my-1">
- <button type="submit" class="btn btn-primary">Imprimir</button>
-</div>
+
 
 														</form>
 
@@ -90,8 +96,14 @@
 																		<tr>
 																			<td><c:out value="${mL.id}"></c:out></td>
 																			<td><c:out value="${mL.nome}"></c:out></td>
-																			
 																		</tr>
+																		
+																		 <c:forEach items="${mL.telefones}" var="fone">
+																	        <tr>
+																	         <td/>
+																	          <td style="font-size: 10px;"><c:out value="${fone.numero}"></c:out></td>
+																	        </tr>
+																	      </c:forEach>
 																	</c:forEach>
 																</tbody>
 															</table>
@@ -119,8 +131,22 @@
 	<!-- include do javascript Jquery -->
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 
+
 	<script type="text/javascript">
-		$(function() {
+
+	function imprimirHtml(){
+		document.getElementById("acaoRelatorioImprimirTipo").value = "ImprimiRelatorioUser";
+		$("#formUser").submit();
+		
+	}
+	
+	function imprimirPdf(){
+		document.getElementById("acaoRelatorioImprimirTipo").value = "ImprimiRelatorioPDF";
+		$("#formUser").submit();
+		
+	}
+	
+	$(function() {
 
 			$("#dataInicial")
 					.datepicker(

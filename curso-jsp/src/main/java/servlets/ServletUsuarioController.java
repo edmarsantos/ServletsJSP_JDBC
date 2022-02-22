@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import model.ModelLogin;
+import util.ReportUtil;
 
 @MultipartConfig    //essa notação muda de acordo com a versao do apache
 @WebServlet(urlPatterns ={"/ServletUsuarioController"})
@@ -154,12 +155,41 @@ public class ServletUsuarioController extends ServletGenericUtil {
 				
 				request.setAttribute("listaUser", daoUsuarioRepository.consultarUsuarioListRel(super.getUserLogado(request)));
 				
+			}else {
+				request.setAttribute("listaUser", daoUsuarioRepository.
+						consultaUsuarioListRel(super.getUserLogado(request),dataInicial,dataFinal));
 			}
 			
 			
 			request.setAttribute("dataInicial", dataInicial);
 			request.setAttribute("dataFinal", dataFinal);
 			request.getRequestDispatcher("principal/reluser.jsp").forward(request, response);
+			
+			
+		}else if(acao !=null && !acao.isEmpty() && acao.equalsIgnoreCase("ImprimiRelatorioPDF")){
+			
+
+			String dataInicial = request.getParameter("dataInicial");
+			String dataFinal = request.getParameter("dataFinal");			
+			
+	
+			List<ModelLogin> modelLogins = null;
+			
+			
+			if(dataInicial == null || dataInicial.isEmpty()
+					&& dataFinal == null || dataFinal.isEmpty()) {
+			
+				modelLogins = daoUsuarioRepository.consultarUsuarioListRel(super.getUserLogado(request));
+				
+			}else {
+			
+				modelLogins = daoUsuarioRepository.
+						consultaUsuarioListRel(super.getUserLogado(request),dataInicial,dataFinal);
+			}
+			byte [] relatorio = new ReportUtil().gerarRelatorioPDF(modelLogins, "rel-user-jsp", request.getServletContext());
+			
+			response.setHeader("Content-Disposition", "attachment;filename=arquivo.pdf") ; //Content-Disposition srve para o navegador indentificar que e um dowload 
+			 response.getOutputStream().write(relatorio);
 			
 			
 		}else {

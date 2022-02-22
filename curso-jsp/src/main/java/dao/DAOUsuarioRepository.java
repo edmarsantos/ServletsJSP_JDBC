@@ -1,19 +1,23 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import connection.SingleConnectionBanco;
 import model.ModelLogin;
+import model.ModelTelefone;
 
 public class DAOUsuarioRepository {
 
 	private Connection connection;
 	
+		
 	public DAOUsuarioRepository() {
 
 		connection = SingleConnectionBanco.getConnection();
@@ -194,7 +198,7 @@ public List<ModelLogin> consultarUsuarioList(Long userLogado) throws SQLExceptio
 	}
 	
 
-public List<ModelLogin> consultarUsuarioListRel(Long userLogado) throws SQLException {
+public List<ModelLogin> consultarUsuarioListRel(Long userLogado) throws Exception {
 	
 	List<ModelLogin> retorno = new ArrayList<ModelLogin>();
 	String Sql = "select * from model_login where useradmin is false and usuario_id = "+ userLogado + "  ";
@@ -211,10 +215,52 @@ public List<ModelLogin> consultarUsuarioListRel(Long userLogado) throws SQLExcep
 		modelLogin.setLogin(resultado.getString("login"));
 		modelLogin.setNome(resultado.getString("nome"));
 		modelLogin.setPerfil(resultado.getString("perfil"));
+		modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
 		modelLogin.setSexo(resultado.getString("sexo"));
 		
+		
+		  modelLogin.setTelefones(this.listFone(modelLogin.getId()));
+		 
 		retorno.add(modelLogin);
 		
+	}
+	
+	
+	return retorno;
+}
+
+public List<ModelLogin> consultaUsuarioListRel(Long userLogado, String dataInicial, String dataFinal) throws Exception {
+	
+	List<ModelLogin> retorno = new ArrayList<ModelLogin>();
+	
+	SimpleDateFormat formato = new SimpleDateFormat("yyyy-mm-dd"); 
+		
+	String sql = "select * from model_login where useradmin is false and usuario_id = " + userLogado + 
+			     " and datanascimento between '"+ 
+			     Date.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("dd/mm/yyyy").parse(dataInicial)))
+			     +"' and '"+
+			     Date.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("dd/mm/yyyy").parse(dataFinal)))
+			     +"'";
+	PreparedStatement statement = connection.prepareStatement(sql);
+	
+	ResultSet resultado = statement.executeQuery();
+	
+	while (resultado.next()) { /*percorrer as linhas de resultado do SQL*/
+		
+		ModelLogin modelLogin = new ModelLogin();
+		
+		modelLogin.setEmail(resultado.getString("email"));
+		modelLogin.setId(resultado.getLong("id"));
+		modelLogin.setLogin(resultado.getString("login"));
+		modelLogin.setNome(resultado.getString("nome"));
+		//modelLogin.setSenha(resultado.getString("senha"));
+		modelLogin.setPerfil(resultado.getString("perfil"));
+		modelLogin.setSexo(resultado.getString("sexo"));
+		modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
+		modelLogin.setTelefones(this.listFone(modelLogin.getId()));
+		
+		
+		retorno.add(modelLogin);
 	}
 	
 	
@@ -539,4 +585,33 @@ public ModelLogin consultarUsuario(String login) throws Exception {
 	}
 	
 	
+public List<ModelTelefone> listFone(Long idUserPai) throws Exception {
+		
+		List<ModelTelefone> retorno = new ArrayList<ModelTelefone>();
+		
+		String sql = "select * from telefone where usuario_pai_id = ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		
+		preparedStatement.setLong(1, idUserPai);
+		
+		ResultSet rs = preparedStatement.executeQuery();
+		
+		while (rs.next()) {
+			
+			ModelTelefone modelTelefone = new ModelTelefone();
+			
+			modelTelefone.setId(rs.getLong("id"));
+			modelTelefone.setNumero(rs.getString("numero"));
+			modelTelefone.setUsuario_cad_id(this.consultarUsuarioID(rs.getLong("usuario_cad_id")));
+			modelTelefone.setUsuario_pai_id(this.consultarUsuarioID(rs.getLong("usuario_pai_id")));
+			
+			retorno.add(modelTelefone);
+		}
+		return retorno;
+	}
+
+
 }
+
+	
+
