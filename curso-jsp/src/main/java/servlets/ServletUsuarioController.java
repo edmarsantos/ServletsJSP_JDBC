@@ -1,8 +1,10 @@
 package servlets;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.tomcat.jakartaee.commons.compress.utils.IOUtils;
@@ -186,7 +188,11 @@ public class ServletUsuarioController extends ServletGenericUtil {
 				modelLogins = daoUsuarioRepository.
 						consultaUsuarioListRel(super.getUserLogado(request),dataInicial,dataFinal);
 			}
-			byte [] relatorio = new ReportUtil().gerarRelatorioPDF(modelLogins, "rel-user-jsp", request.getServletContext());
+			
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("PARAM_SUB_REPORT", request.getServletContext().getRealPath("relatorio")  + File.separator);
+			
+			byte [] relatorio = new ReportUtil().gerarRelatorioPDF(modelLogins, "rel-user-jsp", params ,request.getServletContext());
 			
 			response.setHeader("Content-Disposition", "attachment;filename=arquivo.pdf") ; //Content-Disposition srve para o navegador indentificar que e um dowload 
 			 response.getOutputStream().write(relatorio);

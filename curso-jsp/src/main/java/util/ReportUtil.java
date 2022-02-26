@@ -2,6 +2,7 @@ package util;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.collections.map.HashedMap;
@@ -18,6 +19,20 @@ public class ReportUtil implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
+	public byte[] gerarRelatorioPDF( List listaDados,String nomeRelatorio, HashMap<String, Object> params ,ServletContext ServletContext ) throws Exception {
+		
+		//cria lista de dados da consulta Sql feita
+		JRBeanCollectionDataSource  jrbcds = new JRBeanCollectionDataSource(listaDados);
+		
+		String caminhoJasper = ServletContext.getRealPath("relatorio")  + File.separator + nomeRelatorio + ".jasper";
+		
+
+		JasperPrint impressoraJasper = JasperFillManager.fillReport(caminhoJasper, params,jrbcds);
+		
+		return JasperExportManager.exportReportToPdf(impressoraJasper);
+	}
+	
+	
 	public byte[] gerarRelatorioPDF( List listaDados,String nomeRelatorio,ServletContext ServletContext ) throws Exception {
 	
 		//cria lista de dados da consulta Sql feita
