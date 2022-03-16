@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import beandto.BeanDtoGraficoSalarioUser;
 import connection.SingleConnectionBanco;
 import model.ModelLogin;
 import model.ModelTelefone;
@@ -25,12 +26,78 @@ public class DAOUsuarioRepository {
 	}//esse construtor foi gerado com o crtl + espaço
 
 
+	public BeanDtoGraficoSalarioUser montarGraficoMediaSalario(long userLogado, String dataInicial, String dataFinal) throws Exception {
+
+		String sql = "select avg(rendamensal) as media_salarial, perfil from model_login where useradmin is false and usuario_id = " + userLogado + 
+			     " and datanascimento between '"+ 
+			     Date.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("dd/mm/yyyy").parse(dataInicial)))
+			     +"' and '"+
+			     Date.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("dd/mm/yyyy").parse(dataFinal)))
+			     +"' group by perfil";
+		
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+				
+				
+				ResultSet resultSet = preparedStatement.executeQuery();
+				
+				List<String> perfils = new ArrayList<String>();
+				List<Double> salarios = new ArrayList<Double>();
+				
+				BeanDtoGraficoSalarioUser beanDtoGraficoSalarioUser = new BeanDtoGraficoSalarioUser();
+				
+				while (resultSet.next()) {
+					Double media_salarial = resultSet.getDouble("media_salarial");
+					String perfil =  resultSet.getString("perfil") ;
+					
+					perfils.add(perfil);
+					salarios.add(media_salarial);
+				}
+				
+				beanDtoGraficoSalarioUser.setPerfils(perfils);
+				beanDtoGraficoSalarioUser.setSalarios(salarios);
+				
+				return beanDtoGraficoSalarioUser;
+	}
+	
+	
+	public BeanDtoGraficoSalarioUser montarGraficoMediaSalario(Long userLogado) throws Exception {
+
+		String sql = "select avg(rendamensal) as media_salarial, perfil from model_login where usuario_id  = ?  group by perfil";
+		
+PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		
+		preparedStatement.setLong(1, userLogado);
+		//preparedStatement.setDate(2, Date.valueOf(new SimpleDateFormat("yyyy-mm-dd").format(new SimpleDateFormat("dd/mm/yyyy").parse(dataInicial))));
+		//preparedStatement.setDate(3, Date.valueOf(new SimpleDateFormat("yyyy-mm-dd").format(new SimpleDateFormat("dd/mm/yyyy").parse(dataFinal))));
+		
+		ResultSet resultSet = preparedStatement.executeQuery();
+		
+		List<String> perfils = new ArrayList<String>();
+		List<Double> salarios = new ArrayList<Double>();
+		
+		BeanDtoGraficoSalarioUser beanDtoGraficoSalarioUser = new BeanDtoGraficoSalarioUser();
+		
+		while (resultSet.next()) {
+			Double media_salarial = resultSet.getDouble("media_salarial");
+			String perfil =  resultSet.getString("perfil") ;
+			
+			perfils.add(perfil);
+			salarios.add(media_salarial);
+		}
+		
+		beanDtoGraficoSalarioUser.setPerfils(perfils);
+		beanDtoGraficoSalarioUser.setSalarios(salarios);
+		
+		return beanDtoGraficoSalarioUser;
+	}
+	
+
 	// void nao retornar nada e qdo coloca ModelLogin ele retorna par a ModelLogin
 	public ModelLogin gravarUsuario(ModelLogin objeto, Long userLogado) throws Exception  {
 		
 		if(objeto.isNovo()) {
 		
-		String sql = "INSERT INTO public.model_login(login, senha, nome, email,usuario_id,perfil,sexo,cep ,  logradouro ,  bairro ,  localidade ,  uf,  numero,datanascimento,rendalMensal)VALUES (?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO public.model_login(login, senha, nome, email,usuario_id,perfil,sexo,cep ,  logradouro ,  bairro ,  localidade ,  uf,  numero,datanascimento,rendamensal)VALUES (?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?);";
 				
 		PreparedStatement preparedSql = connection.prepareStatement(sql);
 				
@@ -609,6 +676,9 @@ public List<ModelTelefone> listFone(Long idUserPai) throws Exception {
 		}
 		return retorno;
 	}
+
+
+
 
 
 }
