@@ -5,11 +5,15 @@ import java.sql.DriverManager;
 
 public class SingleConnectionBanco {
 	
-	private static String banco ="jdbc:postgresql://localhost:5433/curso-jsp?autoReconnect=true";
-	private static String password = "admin";
-	private static String user = "postgres";
-	private static Connection connection = null;
+	//private static String banco ="jdbc:postgresql://localhost:5433/curso-jsp?autoReconnect=true";
+	//private static String password = "admin";
+	//private static String user = "postgres";
+	//private static Connection connection = null;
 	
+	private static String banco ="jdbc:postgresql://ec2-3-216-221-31.compute-1.amazonaws.com:5432/daf2junpua7ful?sslmode=require&autoReconnect=true";
+	private static String password = "83c3923799db5687351a40abb04949a1e4ae3b0d5557c1d4c76e36b6f21890aa";
+	private static String user = "aqfwfrqtrsvwss";
+	private static Connection connection = null;
 	
 
 	static{

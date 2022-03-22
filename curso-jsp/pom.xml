@@ -45,9 +45,46 @@
     <groupId>net.sf.jasperreports</groupId>
     <artifactId>jasperreports</artifactId>
     <version>6.16.0</version>
+    
+    <!-- esse exclusions coloquei por um erro que estava dando no maven para publicar o arquivo nao estava na aula -->
+    <exclusions>
+<exclusion>
+<groupId>com.lowagie</groupId>
+<artifactId>itext</artifactId>
+</exclusion>
+</exclusions>
+    
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.lowagie/itext -->
+<dependency>
+    <groupId>com.lowagie</groupId>
+    <artifactId>itext</artifactId>
+    <version>2.1.7</version>
 </dependency>
 
 
+
+  <!-- esta na aula coloquei por um erro que estava dando no maven para publicar o arquivo -->
+<dependency>
+			<groupId>tomcat</groupId>
+			<artifactId>tomcat-util</artifactId>
+			<version>5.5.23</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-coyote</artifactId>
+			<version>10.1.0-M5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>1.21</version>
+		</dependency>
+
+
+
+		
 
   </dependencies>
   <build>
